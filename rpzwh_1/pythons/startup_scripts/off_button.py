@@ -14,7 +14,7 @@ while True:
     input_state = GPIO.input(buttonPin)
    
     if (not input_state):
-        print("CONNECTED TO GROUND")
+        print("Shutdown")
        # os.system('sudo shutdown -h now')
         time.sleep(0.05)
 
