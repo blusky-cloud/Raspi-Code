@@ -1,0 +1,4 @@
+Device Information: Raspberry Pi Zero WH
+Device Name: r-zerowh-2
+Installed: vim
+
