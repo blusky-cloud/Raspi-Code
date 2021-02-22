@@ -9,6 +9,6 @@ PORT = 8080
 Handler = http.server.SimpleHTTPRequestHandler
 
 with socketserver.TCPServer(("", PORT), Handler) as httpd:
-    print("Server Starts - %s:%s" % (host_name, PORT))
+    print("Stable1 Server Starts - %s:%s" % (host_name, PORT))
     httpd.serve_forever()
 
