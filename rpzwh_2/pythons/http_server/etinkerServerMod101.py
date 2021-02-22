@@ -33,13 +33,9 @@ class MyServer(BaseHTTPRequestHandler):
         html = '''
            <html>
            <body style="width:960px; margin: 20px auto;">
-           <h1>Welcome to my Raspberry Pi</h1>
+           <h1>Welcome to the DTM http.server v1.01</h1>
+           <p>Running on a Raspberry Pi Zero W</p>
            <p>Current GPU temperature is {}</p>
-           <form action="/" method="POST">
-               Turn LED :
-               <input type="submit" name="submit" value="On">
-               <input type="submit" name="submit" value="Off">
-           </form>
            </body>
            </html>
         '''
@@ -68,7 +64,11 @@ class MyServer(BaseHTTPRequestHandler):
         print("LED is {}".format(post_data))
         self._redirect('/')  # Redirect back to the root url
         '''
-
+'''
+GPIO.setmode(GPIO.BCM)
+ssh_indicate = 12
+GPIO.setup(ssh_indicate, GPIO.OUT)
+'''
 
 if __name__ == '__main__':
     http_server = HTTPServer((host_name, host_port), MyServer)
@@ -78,3 +78,10 @@ if __name__ == '__main__':
         http_server.serve_forever()
     except KeyboardInterrupt:
         http_server.server_close()
+    '''
+    else:
+        ssh_active = GPIO.input(ssh_indicate)
+        if not ssh_active:
+                http_server.server_close()
+
+      '''  
