@@ -68,9 +68,7 @@ class MyServer(BaseHTTPRequestHandler):
                     <h1>Welcome to the DTM http.server v1.01</h1>
                     <p>Running on a Raspberry Pi Zero W</p>
                     <p>Current DTM GPU temperature is {}</p>
-                    <form method="POST">
-                        <input name="submit">
-                    </form>
+
                     <p>Current DCM GPU temperature is UNKNOWN</p>
                 </body>
                 </html>
@@ -87,12 +85,10 @@ class MyServer(BaseHTTPRequestHandler):
                     <title>DTM Server (Stable Page)</title>
                 </head>
                 <body style="width:960px; margin: 20px auto;">
-                    <h1>Welcome to the DTM http.server v1.01</h1>
+                    <h1>Welcome to the DTM http.server v1.02</h1>
                     <p>Running on a Raspberry Pi Zero W</p>
                     <p>Current DTM GPU temperature is {}</p>
-                    <form method="POST">
-                        <input name="submit">
-                    </form>
+
                     <p>Current DCM GPU temperature is {}'C</p>
             '''
             end_html = '''</body>
