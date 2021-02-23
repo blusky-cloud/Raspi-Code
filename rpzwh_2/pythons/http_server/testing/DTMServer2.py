@@ -103,10 +103,11 @@ class MyServer(BaseHTTPRequestHandler):
             dcTemp = getDCMTemp(post_data)
             dcTime = getDCMTime(post_data)
             timestamp = 'Updated: ' + dcTime
-            raw_xml = 'Parsed from XML: ' + '"' + str(post_data) + '"'
+            xmlTitle = 'Parsed from the following (DCM generated) XML:'
+            raw_xml = str(post_data) 
             connections = 'This was DCM Update #: ' + str(posts_received) + ' since epoch'
             
-            html = html + makeHtmlLine(timestamp) + makeHtmlText(raw_xml) + makeHtmlLine(connections) + end_html
+            html = html + makeHtmlLine(timestamp) + makeHtmlLine(xmlTitle) + makeHtmlText(raw_xml) + makeHtmlLine(connections) + end_html
             self.do_HEAD()
             self.wfile.write(html.format(temp[5:], dcTemp).encode("utf-8"))
             
