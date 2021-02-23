@@ -36,11 +36,11 @@ def getDCMTime(xml_input):
     return timestamp
 
 def makeHtmlLine(str_in):
-    str_in = '<p>' + str_in + '</p>'
+    str_in = '<p style="text-indent: 40px">' + str_in + '</p>'
     return str_in
 
 def makeHtmlText(str_in):
-    str_in = '<textarea rows="2" cols="100" style="border:none;">' + str_in + '</textarea>'
+    str_in = '<textarea rows="2" cols="100" style="border:double 2px blue;">' + str_in + '</textarea>'
     return str_in
 
 class MyServer(BaseHTTPRequestHandler):
@@ -65,11 +65,10 @@ class MyServer(BaseHTTPRequestHandler):
                     <title>DTM Server (Stable Page)</title>
                 </head>
                 <body style="width:960px; margin: 20px auto;">
-                    <h1>Welcome to the DTM http.server v1.01</h1>
-                    <p>Running on a Raspberry Pi Zero W</p>
-                    <p>Current DTM GPU temperature is {}</p>
-
-                    <p>Current DCM GPU temperature is UNKNOWN</p>
+                    <h1 style="text-indent: 40px">Welcome to the DTM http.server v1.01</h1>
+                    <p style="text-indent: 40px">Running on a Raspberry Pi Zero W</p>
+                    <p style="text-indent: 40px">Current DTM GPU temperature is {}</p>
+                    <p style="text-indent: 40px">Current DCM GPU temperature is UNKNOWN</p>
                 </body>
                 </html>
             '''
@@ -85,11 +84,10 @@ class MyServer(BaseHTTPRequestHandler):
                     <title>DTM Server (Stable Page)</title>
                 </head>
                 <body style="width:960px; margin: 20px auto;">
-                    <h1>Welcome to the DTM http.server v1.02</h1>
-                    <p>Running on a Raspberry Pi Zero W</p>
-                    <p>Current DTM GPU temperature is {}</p>
-
-                    <p>Current DCM GPU temperature is {}'C</p>
+                    <h1 style="text-indent: 40px">Welcome to the DTM http.server v1.02</h1>
+                    <p style="text-indent: 40px">Running on a Raspberry Pi Zero W</p>
+                    <p style="text-indent: 40px">Current DTM GPU temperature is {}</p>
+                    <p style="text-indent: 40px">Current DCM GPU temperature is {}'C</p>
             '''
             end_html = '''</body>
                              </html>'''
