@@ -14,20 +14,22 @@ post_data = ''
 
 
 def appendLog(dcm_temperature, dcm_timestamp):
-    """update the .xml log of dcm updates
+    """update the .xml log of dcm updates every 1 minute
     """
-    tree = ET.parse('TrustLogv2.xml')
-    root = tree.getroot()
-    dtm_time = str(datetime.datetime.now())
-    newContact = ET.SubElement(root, 'DCMContact')
-    newContact.set('DCM_timestamp', dcm_timestamp)
-    newContact.set('DCM_emp', dcm_temperature)
-    newContact.set('log_update_timestamp', dtm_time)
-    prettyXmlStr = prettify(root)
-    prettyXmlStr = prettyXmlStr.replace('</TrustLog>', '\n</TrustLog>')
-    prettyXmlStr = prettyXmlStr.replace('<TrustLog>', '\n<TrustLog>')
-    with open('TrustLogv2.xml', 'w') as logFile:
-        print(prettyXmlStr, file=logFile)
+    if posts_received % 12 == 0: #because the http client program running on the dcm
+                                 #submits a POST request every 5 seconds
+        tree = ET.parse('TrustLogv2.xml')
+        root = tree.getroot()
+        dtm_time = str(datetime.datetime.now())
+        newContact = ET.SubElement(root, 'DCMContact')
+        newContact.set('DCM_timestamp', dcm_timestamp)
+        newContact.set('DCM_emp', dcm_temperature)
+        newContact.set('log_update_timestamp', dtm_time)
+        prettyXmlStr = prettify(root)
+        prettyXmlStr = prettyXmlStr.replace('</TrustLog>', '\n</TrustLog>')
+        prettyXmlStr = prettyXmlStr.replace('<TrustLog>', '\n<TrustLog>')
+        with open('TrustLogv2.xml', 'w') as logFile:
+            print(prettyXmlStr, file=logFile)
 
 def prettify(elem):
     """Return a pretty-printed XML string for the Element.
