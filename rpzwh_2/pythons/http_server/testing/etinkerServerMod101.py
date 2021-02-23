@@ -41,7 +41,7 @@ def getDCMTime(xml_input):
 
 class MyServer(BaseHTTPRequestHandler):
     post_data = ''
-    post_received = False
+    posts_received = 0
 
     def do_HEAD(self):
         self.send_response(200)
@@ -55,7 +55,8 @@ class MyServer(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        if not post_received:
+        if posts_received == 0:
+            print("NO POST REQUESTS")
             html = '''
                 <html>
                 <head>
@@ -76,6 +77,7 @@ class MyServer(BaseHTTPRequestHandler):
             self.do_HEAD()
             self.wfile.write(html.format(temp[5:]).encode("utf-8"))
         else:
+            print("POST REQUEST")
             html = '''
                 <html>
                 <head>
@@ -101,7 +103,7 @@ class MyServer(BaseHTTPRequestHandler):
             
 
     def do_POST(self):
-        post_received = True
+        post_received += 1
         post_data = self.rfile.read().decode("utf-8")  # Get the data
         print(" POST REQUEST RECEIVED. raw:")
         print(post_data)
