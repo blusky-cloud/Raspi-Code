@@ -42,7 +42,7 @@ def getDCMTime(xml_input):
     return timestamp
 
 def makeHtmlLine(str_in):
-    str_in = '<p>' + str_in + '</p>'
+    str_in = '<p>' + '"' + str_in + '"' + '</p>'
     return str_in
 
 class MyServer(BaseHTTPRequestHandler):
