@@ -101,7 +101,7 @@ class MyServer(BaseHTTPRequestHandler):
             timestamp = '<b>Updated: ' + dcTime + '</b>'
             xmlTitle = '<i>Data parsed from the following (DCM generated) XML:</i>'
             raw_xml = str(post_data) 
-            connections = 'This was DCM Update #: ' + str(posts_received) + ' since epoch'
+            connections = 'From DCM Update #: ' + str(posts_received) + ' since DTM Server epoch'
             
             html = html + makeHtmlLine(timestamp) + makeHtmlLine(xmlTitle) + makeHtmlText(raw_xml) + makeHtmlLine(connections) + end_html
             self.do_HEAD()
