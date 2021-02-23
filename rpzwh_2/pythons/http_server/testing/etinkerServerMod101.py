@@ -8,6 +8,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 host_name = '192.168.0.178'  # DTM Rpi address
 host_port = 8889
+posts_received = 0
 
 
 def appendLog(entry):
@@ -55,7 +56,7 @@ class MyServer(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        if self.posts_received == 0:
+        if posts_received == 0:
             print("NO POST REQUESTS")
             html = '''
                 <html>
@@ -76,7 +77,8 @@ class MyServer(BaseHTTPRequestHandler):
             temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
             self.do_HEAD()
             self.wfile.write(html.format(temp[5:]).encode("utf-8"))
-        if self.posts_received > 0:
+        
+        if posts_received > 0:
             print("POST REQUEST")
             html = '''
                 <html>
@@ -103,11 +105,11 @@ class MyServer(BaseHTTPRequestHandler):
             
 
     def do_POST(self):
-        self.posts_received += 1
+        posts_received += 1
         self.post_data = self.rfile.read().decode("utf-8")  # Get the data
         print(" POST REQUEST RECEIVED. raw:")
         print(self.post_data)
-        print(self.posts_received)
+        print(posts_received)
         temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
         dcTemp = getDCMTemp(self.post_data)
 
