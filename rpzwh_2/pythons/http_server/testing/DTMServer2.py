@@ -107,7 +107,6 @@ class MyServer(BaseHTTPRequestHandler):
             self.do_HEAD()
             self.wfile.write(html.format(temp[5:], dcTemp).encode("utf-8"))
             
-
     def do_POST(self):
         global posts_received 
         global post_data
@@ -116,9 +115,6 @@ class MyServer(BaseHTTPRequestHandler):
         print(" POST REQUEST RECEIVED. raw:")
         print(post_data)
         print(posts_received)
-
-
-
 
 if __name__ == '__main__':
     http_server = HTTPServer((host_name, host_port), MyServer)
