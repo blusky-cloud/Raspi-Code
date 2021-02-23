@@ -13,7 +13,7 @@ data = ET.Element('TrustLog')
 el1 = ET.SubElement(data, 'DCMContact')
 el1.set('timestamp', tStamp)
 sel1 = ET.SubElement(el1, "update")
-sel1.text = 'FILE CREATED'\
+sel1.text = 'FILE CREATED'
 
 obj_xml = ET.tostring(data)
 with open("TrustLogv1.xml", "wb") as f:

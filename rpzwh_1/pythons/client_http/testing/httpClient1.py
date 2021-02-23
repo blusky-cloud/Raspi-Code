@@ -1,14 +1,32 @@
 import urllib3
-import socket
+import http.client
+import RPi.GPIO as GPIO
+import os
+import sys
+import xml.etree.ElementTree as ET
+from time import sleep
+import datetime
 
-HOST = '192.168.0.178'  # The server's hostname or IP address
-PORT = 8889      # The port used by the server
-link = '192.168.0.178:8889'
+host_name = '192.168.0.178'  # DTM Rpi address
+host_port = 8889
+host_address = '192.168.0.178:8889'
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.connect((HOST, PORT))
-    s.sendall(b'Hello, world')
-    data = s.recv(1024)
+el1 = ET.Element('DCMContact')
+el1.set('timestamp', tStamp)
+sel1 = ET.SubElement(el1, "update")
+temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
+temp = temp.format(temp[5:]).encode("utf-8")
+sel1.text = temp
+obj_xml = ET.tostring(el1)
+params = urllib.parse.urlencode(obj_xml)
+headers = {"Content-type": "text/xml", "Accept": "text/plain"}
 
-print('Received', repr(data))
+while True:
+    sendDTM = http.client.HTTPConnection(host_name, host_port)
+    sendDTM.request('PUT', obj_xml, headers)
+    sleep(5)
 
+'''
+http = urllib3.PoolManager()
+r = http.request('POST', host_address, fields)
+'''

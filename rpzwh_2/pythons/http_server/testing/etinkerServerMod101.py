@@ -3,11 +3,23 @@ import os
 import sys
 import xml.etree.ElementTree as ET
 from time import sleep
+import datetime
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 host_name = '192.168.0.178'  # DTM Rpi address
 host_port = 8889
 
+def appendLog(entry):
+    tree = ET.parse('TrustLogv1.xml')
+    root = tree.getroot()
+    ct = datetime.datetime.now()
+    tStamp = str(ct)
+    nEl = ET.SubElement(root, 'DCMContact')
+    nEl.set('timestamp', tStamp)
+    nEl.text = entry
+    obj_xml = ET.tostring(data)
+    with open("TrustLogv1.xml", "wb") as f:
+    f.write(obj_xml)
 
 
 class MyServer(BaseHTTPRequestHandler):
@@ -34,6 +46,9 @@ class MyServer(BaseHTTPRequestHandler):
                 <h1>Welcome to the DTM http.server v1.01</h1>
                 <p>Running on a Raspberry Pi Zero W</p>
                 <p>Current GPU temperature is {}</p>
+                <form method="POST">
+                    <input name="submit">
+                </form>
             </body>
             </html>
         '''
@@ -43,9 +58,9 @@ class MyServer(BaseHTTPRequestHandler):
 
     def do_POST(self):
 
-        content_length = int(self.headers['Content-Length'])  # Get the size of data
+        #content_length = int(self.headers['Content-Length'])  # Get the size of data
         post_data = self.rfile.read(content_length).decode("utf-8")  # Get the data
-        post_data = post_data.split("=")[1]  # Only keep the value
+        print(post_data)
 
 
 
