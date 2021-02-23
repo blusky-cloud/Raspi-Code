@@ -101,7 +101,7 @@ class MyServer(BaseHTTPRequestHandler):
             dcTemp = getDCMTemp(self.post_data)
             dcTime = getDCMTime(self.post_data)
             self.do_HEAD()
-            self.wfile.write(html.format(temp[5:], dcTemp, dcTime).encode("utf-8"))
+            self.wfile.write(html.format(temp[5:], dcTemp, 3).encode("utf-8"))
             
 
     def do_POST(self):
