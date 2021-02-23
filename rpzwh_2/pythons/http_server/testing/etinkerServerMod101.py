@@ -79,6 +79,7 @@ class MyServer(BaseHTTPRequestHandler):
             </body>
             </html>
         '''
+        temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
         self.do_HEAD()
         self.wfile.write(html.format(temp[5:], post_data).encode("utf-8"))
 
