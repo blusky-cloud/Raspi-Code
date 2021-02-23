@@ -11,15 +11,20 @@ host_name = '192.168.0.178'  # DTM Rpi address
 host_port = 8889
 host_address = '192.168.0.178:8889'
 
-ct = datetime.datetime.now()
-tStamp = str(ct)
-el1 = ET.Element('DCMContact')
-el1.set('timestamp', tStamp)
-sel1 = ET.SubElement(el1, "update")
 temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
 temp = temp.format(temp[5:]).encode("utf-8")
+temp = str(temp)
+ct = datetime.datetime.now()
+tStamp = str(ct)
+
+data = ET.Element('TrustLog')
+el1 = ET.SubElement(data, 'DCMContact')
+el1.set('timestamp', tStamp)
+sel1 = ET.SubElement(el1, "update")
 sel1.text = temp
-obj_xml = ET.tostring(el1)
+
+obj_xml = ET.tostring(data)
+
 params = urllib.parse.urlencode(obj_xml)
 headers = {"Content-type": "text/xml", "Accept": "text/plain"}
 
