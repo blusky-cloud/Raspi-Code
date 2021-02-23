@@ -12,18 +12,6 @@ host_port = 8889
 posts_received = 0
 post_data = ''
 
-def appendLog(entry):
-
-    tree = ET.parse('TrustLogv1.xml')
-    root = tree.getroot()
-    ct = datetime.datetime.now()
-    tStamp = str(ct)
-    nEl = ET.SubElement(root, 'DCMContact')
-    nEl.set('timestamp', tStamp)
-    nEl.text = entry
-    obj_xml = ET.tostring(data)
-    with open("TrustLogv1.xml", "wb") as f:
-        f.write(obj_xml)
 
 def appendLog(dcm_temperature, dcm_timestamp):
 
