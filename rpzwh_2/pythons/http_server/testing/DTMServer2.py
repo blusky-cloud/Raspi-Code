@@ -100,7 +100,7 @@ class MyServer(BaseHTTPRequestHandler):
             dcTime = getDCMTime(post_data)
             timestamp = 'Updated: ' + dcTime
             raw_xml = 'Parsed from XML: ' + '"' + post_data + '"'
-            connections = 'This was DCM Update #: ' + posts_received + 'since epoch.'
+            connections = 'This was DCM Update #: ' + str(posts_received) + 'since epoch.'
             print(makeHtmlLine(raw_xml))
             html = html + makeHtmlLine(timestamp) + makeHtmlLine(raw_xml) + makeHtmlLine(connections) + end_html
             self.do_HEAD()
