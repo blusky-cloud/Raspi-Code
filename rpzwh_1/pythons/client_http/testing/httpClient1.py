@@ -33,7 +33,6 @@ el1 = ET.SubElement(data, 'DCMContact') #subelement
 el1.set('timestamp', tStamp) # timestamp is an attribute, attrib
 el1.set('temp', temp) #temp is an attribute
 el1.text = 'CONNECTION SUCCESSFUL' #just kinda filler
-#sel1.text = temp
 
 obj_xml = ET.tostring(data) #converts xml object into a string
 
