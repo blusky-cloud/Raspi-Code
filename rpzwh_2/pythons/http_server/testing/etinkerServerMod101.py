@@ -9,6 +9,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 host_name = '192.168.0.178'  # DTM Rpi address
 host_port = 8889
 posts_received = 0
+prec = 0
 
 
 def appendLog(entry):
@@ -104,7 +105,7 @@ class MyServer(BaseHTTPRequestHandler):
             
 
     def do_POST(self):
-        posts_received = posts_received + 1
+        prec += 1
         self.post_data = self.rfile.read().decode("utf-8")  # Get the data
         print(" POST REQUEST RECEIVED. raw:")
         print(self.post_data)
