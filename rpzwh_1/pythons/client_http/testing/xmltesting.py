@@ -3,7 +3,7 @@ import os
 import sys
 import re
 import xml.etree.ElementTree as ET
-from xml.etree.ElementTree import tostring
+#from xml.etree.ElementTree import tostring
 from xml.dom import minidom
 from time import sleep
 import datetime
@@ -55,7 +55,6 @@ def appendLog(dcm_temperature, dcm_timestamp):
     newContact.set('DCM_timestamp', dcm_timestamp)
     newContact.set('DCM_emp', dcm_temperature)
     newContact.set('log_update_timestamp', dtm_time)
-    
     #tree.write('TrustLogv2test.xml')
     '''
     prettyXml = prettify(root)
@@ -81,22 +80,20 @@ def appendLog(dcm_temperature, dcm_timestamp):
     tree._setroot(prettyRoot)
     '''
     #tree.write('TrustLogv2test.xml')
-
-
     #with open("TrustLogv2test.xml", "wb") as f:
         #f.write(pretty_xml)
     
 def prettify(elem):
     """Return a pretty-printed XML string for the Element.
     """
-    print("prettify function: rough_string:")
+    #print("prettify function: rough_string:")
     rough_string = ET.tostring(elem, 'utf-8')
     
-    print(rough_string)
-    print(type(rough_string)) #bytes
+    #print(rough_string)
+    #print(type(rough_string)) #bytes
     new_rough_string = rough_string.replace(b'\n', b'')
     new_rough_string = rough_string.replace(b'\t', b'')
-    print(new_rough_string)
+    #print(new_rough_string)
     '''
     testStr = str(rough_string)
     print(type(testStr)) #str
@@ -109,7 +106,7 @@ def prettify(elem):
     print(type(lessRoughString)) #bytes
     '''
     reparsed = minidom.parseString(new_rough_string)
-    print(type(reparsed))
+    #print(type(reparsed))
     return reparsed.toprettyxml(indent='\t', newl='')
 
 #indent="\t", newl=''

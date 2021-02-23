@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 import os
 import sys
 import xml.etree.ElementTree as ET
+from xml.dom import minidom
 from time import sleep
 import datetime
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -12,6 +13,7 @@ posts_received = 0
 post_data = ''
 
 def appendLog(entry):
+
     tree = ET.parse('TrustLogv1.xml')
     root = tree.getroot()
     ct = datetime.datetime.now()
@@ -22,6 +24,71 @@ def appendLog(entry):
     obj_xml = ET.tostring(data)
     with open("TrustLogv1.xml", "wb") as f:
         f.write(obj_xml)
+
+def appendLog(dcm_temperature, dcm_timestamp):
+
+    tree = ET.parse('TrustLogv2.xml')
+    root = tree.getroot()
+    
+    dtm_time = str(datetime.datetime.now())
+    newContact = ET.SubElement(root, 'DCMContact')
+    newContact.set('DCM_timestamp', dcm_timestamp)
+    newContact.set('DCM_emp', dcm_temperature)
+    newContact.set('log_update_timestamp', dtm_time)
+    #tree.write('TrustLogv2test.xml')
+    '''
+    prettyXml = prettify(root)
+    prettyRoot = ET.fromstring(prettyXml)
+    prettyRoot.write('TrustLogv2.xml')
+    print(pretty_xml) '''
+    #print(type(tree))
+    #print(tree)
+    #print("now call prettify xxx")
+    prettyXmlStr = prettify(root)
+    #print("after prettify call xxx")
+    #print(type(prettyXmlStr))
+    #print(prettyXmlStr)
+    prettyXmlStr = prettyXmlStr.replace('</TrustLog>', '\n</TrustLog>')
+    prettyXmlStr = prettyXmlStr.replace('<TrustLog>', '\n<TrustLog>')
+    #print(prettyXmlStr)
+    with open('TrustLogv2.xml', 'w') as logFile:
+        print(prettyXmlStr, file=logFile)
+    '''
+    prettyRoot = ET.fromstring(prettyXmlStr)
+    print(type(prettyRoot))
+    print(prettyRoot)
+    tree._setroot(prettyRoot)
+    '''
+    #tree.write('TrustLogv2.xml')
+    #with open("TrustLogv2.xml", "wb") as f:
+        #f.write(pretty_xml)
+
+def prettify(elem):
+
+    """Return a pretty-printed XML string for the Element.
+    """
+    #print("prettify function: rough_string:")
+    rough_string = ET.tostring(elem, 'utf-8')
+    
+    #print(rough_string)
+    #print(type(rough_string)) #bytes
+    new_rough_string = rough_string.replace(b'\n', b'')
+    new_rough_string = rough_string.replace(b'\t', b'')
+    #print(new_rough_string)
+    '''
+    testStr = str(rough_string)
+    print(type(testStr)) #str
+    testBytes = testStr.encode('utf-8')
+    print(type(testBytes))
+    print(testBytes)
+    fakeparse = minidom.parseString(testBytes)
+    testStr = testStr.replace('\n', '')
+    lessRoughString = testStr.encode('utf-8')
+    print(type(lessRoughString)) #bytes
+    '''
+    reparsed = minidom.parseString(new_rough_string)
+    #print(type(reparsed))
+    return reparsed.toprettyxml(indent='\t', newl='')
 
 def getDCMTemp(xml_input):
     root = ET.fromstring(xml_input)
@@ -115,6 +182,11 @@ class MyServer(BaseHTTPRequestHandler):
         print(" POST REQUEST RECEIVED. raw:")
         print(post_data)
         print(posts_received)
+        local_temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
+        dcm_temp = str(getDCMTemp(post_data)) #getDCMTemp returns a float
+        dcm_time = getDCMTime(post_data) #returns a string
+        appendLog(dcm_temp, dcm_time)
+
 
 if __name__ == '__main__':
     http_server = HTTPServer((host_name, host_port), MyServer)
