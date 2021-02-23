@@ -19,7 +19,7 @@ def appendLog(entry):
     nEl.text = entry
     obj_xml = ET.tostring(data)
     with open("TrustLogv1.xml", "wb") as f:
-    f.write(obj_xml)
+        f.write(obj_xml)
 
 
 class MyServer(BaseHTTPRequestHandler):
