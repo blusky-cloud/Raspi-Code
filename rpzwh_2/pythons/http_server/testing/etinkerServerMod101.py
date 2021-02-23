@@ -55,7 +55,7 @@ class MyServer(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        if posts_received == 0:
+        if self.posts_received == 0:
             print("NO POST REQUESTS")
             html = '''
                 <html>
@@ -96,36 +96,19 @@ class MyServer(BaseHTTPRequestHandler):
                 </html>
             '''
             temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
-            dcTemp = getDCMTemp(post_data)
-            dcTime = getDCMTime(post_data)
+            dcTemp = getDCMTemp(self.post_data)
+            dcTime = getDCMTime(self.post_data)
             self.do_HEAD()
             self.wfile.write(html.format(temp[5:], dcTemp, dcTime).encode("utf-8"))
             
 
     def do_POST(self):
-        posts_received += 1
-        post_data = self.rfile.read().decode("utf-8")  # Get the data
+        self.posts_received += 1
+        self.post_data = self.rfile.read().decode("utf-8")  # Get the data
         print(" POST REQUEST RECEIVED. raw:")
-        print(post_data)
-        html = '''
-            <html>
-            <head>
-                <title>DTM Server (Stable Page)</title>
-            </head>
-            <body style="width:960px; margin: 20px auto;">
-                <h1>Welcome to the DTM http.server v1.01</h1>
-                <p>Running on a Raspberry Pi Zero W</p>
-                <p>Current DTM GPU temperature is {}</p>
-                <form method="POST">
-                    <input name="submit">
-                </form>
-                <p>Current DCM GPU temperature is {}</p>
-                <p>Updated at {}</p>
-            </body>
-            </html>
-        '''
+        print(self.post_data)
         temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
-        dcTemp = getDCMTemp(post_data)
+        dcTemp = getDCMTemp(self.post_data)
         self.do_HEAD()
         self.wfile.write(html.format(temp[5:], dcTemp, 1).encode("utf-8"))
 
