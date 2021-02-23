@@ -11,6 +11,8 @@ host_name = '192.168.0.178'  # DTM Rpi address
 host_port = 8889
 host_address = '192.168.0.178:8889'
 
+ct = datetime.datetime.now()
+tStamp = str(ct)
 el1 = ET.Element('DCMContact')
 el1.set('timestamp', tStamp)
 sel1 = ET.SubElement(el1, "update")
