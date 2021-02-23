@@ -40,7 +40,7 @@ def makeHtmlLine(str_in):
     return str_in
 
 def makeHtmlText(str_in):
-    str_in = '<textarea rows="20" cols="40" style="border:none;">' + str_in + '</textarea>'
+    str_in = '<textarea rows="2" cols="100" style="border:none;">' + str_in + '</textarea>'
     return str_in
 
 class MyServer(BaseHTTPRequestHandler):
