@@ -42,7 +42,6 @@ def getDCMTime(xml_input):
     return timestamp
 
 class MyServer(BaseHTTPRequestHandler):
-    global post_data = ''
 
     def do_HEAD(self):
         self.send_response(200)
