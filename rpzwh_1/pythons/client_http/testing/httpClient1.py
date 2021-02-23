@@ -13,9 +13,15 @@ host_name = '192.168.0.178'  # DTM Rpi address
 host_port = 8889
 host_address = '192.168.0.178:8889'
 
-temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
-temp = temp.format(temp[5:]).encode("utf-8")
-temp = str(temp)
+def getTemp():
+    traw = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
+    traw = traw.replace('temp=', '')
+    traw = traw.replace('\n', '')
+    traw = traw[:-2]
+    temp = str(traw)
+    return temp
+
+temp = getTemp()
 ct = datetime.datetime.now()
 tStamp = str(ct)
 

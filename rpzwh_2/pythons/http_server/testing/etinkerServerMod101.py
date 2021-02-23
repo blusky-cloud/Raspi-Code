@@ -21,6 +21,13 @@ def appendLog(entry):
     with open("TrustLogv1.xml", "wb") as f:
         f.write(obj_xml)
 
+def getDCMTemp(xml_input):
+    root = ET.fromstring(xml_input)
+    DCMTemp = root[0][0] #DCMContact[0] is update
+    print(DCMTemp.tag) 
+    print(DCMTemp.text)
+    return DCMTemp
+
 
 class MyServer(BaseHTTPRequestHandler):
 
@@ -49,7 +56,7 @@ class MyServer(BaseHTTPRequestHandler):
                 <form method="POST">
                     <input name="submit">
                 </form>
-                <p>Current DCM GPU temperature is UNIDENTIFIED</p>
+                <p>Current DCM GPU temperature is {}</p>
             </body>
             </html>
         '''
@@ -59,7 +66,6 @@ class MyServer(BaseHTTPRequestHandler):
 
     def do_POST(self):
 
-        #content_length = int(self.headers['Content-Length'])  # Get the size of data
         post_data = self.rfile.read().decode("utf-8")  # Get the data
         print(" POST REQUEST RECEIVED. raw:")
         print(post_data)
@@ -76,12 +82,14 @@ class MyServer(BaseHTTPRequestHandler):
                     <input name="submit">
                 </form>
                 <p>Current DCM GPU temperature is {}</p>
+                <p>Updated at {}</p>
+                <p>Updated by POST method</p>
             </body>
             </html>
         '''
         temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
         self.do_HEAD()
-        self.wfile.write(html.format(temp[5:], post_data).encode("utf-8"))
+        self.wfile.write(html.format(temp[5:], getDCMTemp(post_data)).encode("utf-8"))
 
 
 
