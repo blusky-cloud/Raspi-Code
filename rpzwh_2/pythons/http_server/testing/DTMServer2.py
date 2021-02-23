@@ -104,7 +104,7 @@ class MyServer(BaseHTTPRequestHandler):
             dcTime = getDCMTime(post_data)
             timestamp = 'Updated: ' + dcTime
             raw_xml = 'Parsed from XML: ' + post_data
-            print(makeHtmlLine(raw_xml)
+            print(makeHtmlLine(raw_xml))
             html = html + makeHtmlLine(timestamp) + makeHtmlLine(raw_xml) + end_html
             self.do_HEAD()
             self.wfile.write(html.format(temp[5:], dcTemp).encode("utf-8"))
