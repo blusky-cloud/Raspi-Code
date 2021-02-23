@@ -7,10 +7,11 @@ import datetime
 
 print("CREATING TrustLogv1 XML FILE")
 ct = datetime.datetime.now()
+tStamp = str(ct)
 
 data = ET.Element('TrustLog')
 el1 = ET.SubElement(data, 'DCMContact')
-el1.set('timestamp', ct)
+el1.set('timestamp', tStamp)
 sel1 = ET.SubElement(el1, "update")
 sel1.text = 'FILE CREATED'\
 
