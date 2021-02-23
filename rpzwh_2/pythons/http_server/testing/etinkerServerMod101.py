@@ -103,7 +103,7 @@ class MyServer(BaseHTTPRequestHandler):
             
 
     def do_POST(self):
-        post_received += 1
+        posts_received += 1
         post_data = self.rfile.read().decode("utf-8")  # Get the data
         print(" POST REQUEST RECEIVED. raw:")
         print(post_data)
