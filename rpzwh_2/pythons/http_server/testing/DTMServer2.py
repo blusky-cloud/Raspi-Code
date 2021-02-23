@@ -39,6 +39,10 @@ def makeHtmlLine(str_in):
     str_in = '<p>' + str_in + '</p>'
     return str_in
 
+def makeHtmlText(str_in):
+    str_int = '<textarea rows="20" cols="40" style="border:none;">' + str_in + '</textarea>'
+    return str_in
+
 class MyServer(BaseHTTPRequestHandler):
 
     def do_HEAD(self):
@@ -89,7 +93,7 @@ class MyServer(BaseHTTPRequestHandler):
                     <form method="POST">
                         <input name="submit">
                     </form>
-                    <p>Current DCM GPU temperature is {}</p>
+                    <p>Current DCM GPU temperature is {}'C</p>
             '''
             end_html = '''</body>
                              </html>'''
@@ -99,10 +103,10 @@ class MyServer(BaseHTTPRequestHandler):
             dcTemp = getDCMTemp(post_data)
             dcTime = getDCMTime(post_data)
             timestamp = 'Updated: ' + dcTime
-            raw_xml = 'Parsed from XML: ' + '"' + post_data + '"'
-            connections = 'This was DCM Update #: ' + str(posts_received) + 'since epoch.'
-            print(makeHtmlLine(raw_xml))
-            html = html + makeHtmlLine(timestamp) + makeHtmlLine(raw_xml) + makeHtmlLine(connections) + end_html
+            raw_xml = 'Parsed from XML: ' + '"' + str(post_data) + '"'
+            connections = 'This was DCM Update #: ' + str(posts_received) + ' since epoch'
+            
+            html = html + makeHtmlLine(timestamp) + makeHtmlText(raw_xml) + makeHtmlLine(connections) + end_html
             self.do_HEAD()
             self.wfile.write(html.format(temp[5:], dcTemp).encode("utf-8"))
             
