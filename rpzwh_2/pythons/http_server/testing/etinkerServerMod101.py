@@ -109,8 +109,7 @@ class MyServer(BaseHTTPRequestHandler):
         print(self.post_data)
         temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
         dcTemp = getDCMTemp(self.post_data)
-        self.do_HEAD()
-        self.wfile.write(html.format(temp[5:], dcTemp, 1).encode("utf-8"))
+
 
 
 
