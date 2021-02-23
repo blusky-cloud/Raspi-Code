@@ -1,5 +1,7 @@
 import urllib3
 import http.client
+import urllib.request
+import urllib.parse
 import RPi.GPIO as GPIO
 import os
 import sys
