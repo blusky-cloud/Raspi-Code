@@ -76,7 +76,7 @@ class MyServer(BaseHTTPRequestHandler):
             temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
             self.do_HEAD()
             self.wfile.write(html.format(temp[5:]).encode("utf-8"))
-        else:
+        if self.posts_received > 0:
             print("POST REQUEST")
             html = '''
                 <html>
@@ -107,6 +107,7 @@ class MyServer(BaseHTTPRequestHandler):
         self.post_data = self.rfile.read().decode("utf-8")  # Get the data
         print(" POST REQUEST RECEIVED. raw:")
         print(self.post_data)
+        print(self.posts_received)
         temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
         dcTemp = getDCMTemp(self.post_data)
 
