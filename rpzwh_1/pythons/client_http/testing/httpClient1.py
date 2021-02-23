@@ -14,6 +14,8 @@ host_port = 8889
 host_address = '192.168.0.178:8889'
 
 def getTemp():
+    """get temp from operating system with an os.popen call
+    """
     traw = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
     traw = traw.replace('temp=', '')
     traw = traw.replace('\n', '')
@@ -25,23 +27,22 @@ temp = getTemp()
 ct = datetime.datetime.now()
 tStamp = str(ct)
 
-data = ET.Element('TrustLog')
-el1 = ET.SubElement(data, 'DCMContact')
-el1.set('timestamp', tStamp)
-el1.set('temp', temp)
-el1.text = 'CONNECTION SUCCESSFUL'
+
+data = ET.Element('TrustLog') #creating an xml element structure
+el1 = ET.SubElement(data, 'DCMContact') #subelement
+el1.set('timestamp', tStamp) # timestamp is an attribute, attrib
+el1.set('temp', temp) #temp is an attribute
+el1.text = 'CONNECTION SUCCESSFUL' #just kinda filler
 #sel1.text = temp
 
-obj_xml = ET.tostring(data)
+obj_xml = ET.tostring(data) #converts xml object into a string
 
-headers = {"Content-type": "text/xml", "Accept": "text/plain"}
+headers = {"Content-type": "text/xml", "Accept": "text/plain"} #headers for the request
 
 while True:
     sendDTM = http.client.HTTPConnection(host_name, host_port)
-    sendDTM.request('POST', host_address, obj_xml, headers)
-    sleep(5)
+    sendDTM.request('POST', host_address, obj_xml, headers) #POST type request, to server address, string created from 
+                                                            #xml object, and the headers dictionary
+    sleep(5) #wait 5 seconds 
 
-'''
-http = urllib3.PoolManager()
-r = http.request('POST', host_address, fields)
-'''
+

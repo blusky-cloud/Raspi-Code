@@ -23,7 +23,7 @@ def appendLog(dcm_temperature, dcm_timestamp):
         dtm_time = str(datetime.datetime.now())
         newContact = ET.SubElement(root, 'DCMContact')
         newContact.set('DCM_timestamp', dcm_timestamp)
-        newContact.set('DCM_emp', dcm_temperature)
+        newContact.set('DCM_temp', dcm_temperature)
         newContact.set('log_update_timestamp', dtm_time)
         prettyXmlStr = prettify(root)
         prettyXmlStr = prettyXmlStr.replace('</TrustLog>', '\n</TrustLog>')
@@ -41,39 +41,58 @@ def prettify(elem):
     return reparsed.toprettyxml(indent='\t', newl='')
 
 def getDCMTemp(xml_input):
+    """Return the DCM temp as float from the parsed xml msg
+    """
     root = ET.fromstring(xml_input)
     DCMTemp = root[0] #DCMContact[0] is update
     temp = float(DCMTemp.attrib['temp'])
     return temp
 
 def getDCMTime(xml_input):
+    """Return the DCM time as string from the parsed xml msg
+    """
     root = ET.fromstring(xml_input)
     DCMTime = root[0] #DCMContact[0] is update
     timestamp = str(DCMTime.attrib['timestamp'])
     return timestamp
 
 def makeHtmlLine(str_in):
+    """add formatting for a "paragraph" in html to a string
+    """
     str_in = '<p style="text-indent: 40px">' + str_in + '</p>'
     return str_in
 
 def makeHtmlText(str_in):
+    """add formatting for an html textarea to a string
+    """
     str_in = '<textarea rows="2" cols="100" style="border:double 2px blue;">' + str_in + '</textarea>'
     return str_in
 
 class MyServer(BaseHTTPRequestHandler):
+    """server derived from python standard library BASEHTTPRequestHandler object, custom handlers
+        for HEAD, GET, POST, and redirect interactions
+    """
 
     def do_HEAD(self):
+        """HEAD method type
+        """
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
 
     def _redirect(self, path):
+        """redirect method type
+        """
         self.send_response(303)
         self.send_header('Content-type', 'text/html')
         self.send_header('Location', path)
         self.end_headers()
 
     def do_GET(self):
+        """GET method type, updates the "served" html page that you can access from a browser 
+            on a local network with [ip address 00.00.00.00 blah]:[port num, 4 digits, matching encoded] 
+            copy pasted to url in browser
+        """
         if posts_received == 0:
             print("NO POST REQUESTS")
             html = '''
@@ -125,6 +144,12 @@ class MyServer(BaseHTTPRequestHandler):
             self.wfile.write(html.format(temp[5:], dcTemp).encode("utf-8"))
             
     def do_POST(self):
+        """POST method type
+            the http.client is running on a DCM on the network, that client
+            submits requests with 'POST', which contain xml 
+            rfile.read().decode() then decodes that msg
+            and saves it to a global string var 
+        """
         global posts_received 
         global post_data
         posts_received += 1
@@ -135,9 +160,11 @@ class MyServer(BaseHTTPRequestHandler):
         local_temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
         dcm_temp = str(getDCMTemp(post_data)) #getDCMTemp returns a float
         dcm_time = getDCMTime(post_data) #returns a string
-        appendLog(dcm_temp, dcm_time)
+        appendLog(dcm_temp, dcm_time) #appends the .xml log 
 
-
+"""
+this is main, just run the server
+"""
 if __name__ == '__main__':
     http_server = HTTPServer((host_name, host_port), MyServer)
     print("Server Starts - %s:%s" % (host_name, host_port))
