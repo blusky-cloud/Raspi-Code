@@ -23,10 +23,10 @@ def appendLog(entry):
 
 def getDCMTemp(xml_input):
     root = ET.fromstring(xml_input)
-    DCMTemp = root[0][0] #DCMContact[0] is update
+    DCMTemp = root[0] #DCMContact[0] is update
     print(DCMTemp.tag) 
-    print(DCMTemp.text)
-    return DCMTemp
+    print(DCMTemp.attrib)
+    return DCMTemp.attrib
 
 
 class MyServer(BaseHTTPRequestHandler):
@@ -90,7 +90,7 @@ class MyServer(BaseHTTPRequestHandler):
         temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
         dcTemp = getDCMTemp(post_data)
         self.do_HEAD()
-        self.wfile.write(html.format(temp[5:], dcTemp).encode("utf-8"))
+        self.wfile.write(html.format(temp[5:], dcTemp, 1).encode("utf-8"))
 
 
 

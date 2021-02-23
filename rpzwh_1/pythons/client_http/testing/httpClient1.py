@@ -28,8 +28,8 @@ tStamp = str(ct)
 data = ET.Element('TrustLog')
 el1 = ET.SubElement(data, 'DCMContact')
 el1.set('timestamp', tStamp)
-sel1 = ET.SubElement(el1, "update")
-sel1.set('temp', temp)
+el1.set('temp', temp)
+el1.text = 'CONNECTION SUCCESSFUL'
 #sel1.text = temp
 
 obj_xml = ET.tostring(data)
