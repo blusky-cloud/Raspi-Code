@@ -68,6 +68,7 @@ class MyServer(BaseHTTPRequestHandler):
                     <h1 style="text-indent: 40px">Welcome to the DTM http.server v1.01</h1>
                     <p style="text-indent: 40px">Running on a Raspberry Pi Zero W</p>
                     <p style="text-indent: 40px">Current DTM GPU temperature is {}</p>
+                    <hr><br><br>
                     <p style="text-indent: 40px">Current DCM GPU temperature is UNKNOWN</p>
                 </body>
                 </html>
@@ -81,13 +82,14 @@ class MyServer(BaseHTTPRequestHandler):
             html = '''
                 <html>
                 <head>
-                    <title>DTM Server (Stable Page)</title>
+                    <title>DTM Server Display </title>
                 </head>
                 <body style="width:960px; margin: 20px auto;">
                     <h1 style="text-indent: 40px">Welcome to the DTM http.server v1.02</h1>
                     <p style="text-indent: 40px">Running on a Raspberry Pi Zero W</p>
                     <p style="text-indent: 40px">Current DTM GPU temperature is {}</p>
-                    <p style="text-indent: 40px">Current DCM GPU temperature is {}'C</p>
+                    <hr><br><br>
+                    <p style="text-indent: 40px"><b>Current DCM GPU temperature is {}'C</b></p>
             '''
             end_html = '''</body>
                              </html>'''
@@ -96,8 +98,8 @@ class MyServer(BaseHTTPRequestHandler):
             temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
             dcTemp = getDCMTemp(post_data)
             dcTime = getDCMTime(post_data)
-            timestamp = 'Updated: ' + dcTime
-            xmlTitle = 'Parsed from the following (DCM generated) XML:'
+            timestamp = '<b>Updated: ' + dcTime + '</b>'
+            xmlTitle = '<i>Data parsed from the following (DCM generated) XML:</i>'
             raw_xml = str(post_data) 
             connections = 'This was DCM Update #: ' + str(posts_received) + ' since epoch'
             
