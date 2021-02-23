@@ -10,7 +10,7 @@ host_name = '192.168.0.178'  # DTM Rpi address
 host_port = 8889
 posts_received = 0
 prec = 0
-
+post_data = ''
 
 def appendLog(entry):
     tree = ET.parse('TrustLogv1.xml')
@@ -42,7 +42,7 @@ def getDCMTime(xml_input):
     return timestamp
 
 class MyServer(BaseHTTPRequestHandler):
-    post_data = ''
+    global post_data = ''
 
     def do_HEAD(self):
         self.send_response(200)
@@ -97,22 +97,24 @@ class MyServer(BaseHTTPRequestHandler):
                 </body>
                 </html>
             '''
+            global post_data
             temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
-            dcTemp = getDCMTemp(self.post_data)
-            dcTime = getDCMTime(self.post_data)
+            dcTemp = getDCMTemp(post_data)
+            dcTime = getDCMTime(post_data)
             self.do_HEAD()
             self.wfile.write(html.format(temp[5:], dcTemp, 3).encode("utf-8"))
             
 
     def do_POST(self):
         global posts_received 
+        global post_data
         posts_received += 1
-        self.post_data = self.rfile.read().decode("utf-8")  # Get the data
+        post_data = self.rfile.read().decode("utf-8")  # Get the data
         print(" POST REQUEST RECEIVED. raw:")
-        print(self.post_data)
+        print(post_data)
         print(posts_received)
         temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
-        dcTemp = getDCMTemp(self.post_data)
+        dcTemp = getDCMTemp(post_data)
 
 
 
