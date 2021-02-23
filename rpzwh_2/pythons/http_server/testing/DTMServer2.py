@@ -9,7 +9,6 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 host_name = '192.168.0.178'  # DTM Rpi address
 host_port = 8889
 posts_received = 0
-prec = 0
 post_data = ''
 
 def appendLog(entry):
@@ -29,7 +28,6 @@ def getDCMTemp(xml_input):
     DCMTemp = root[0] #DCMContact[0] is update
     print(DCMTemp.tag) 
     print(DCMTemp.attrib)
-    print(DCMTemp.attrib['temp'])
     temp = float(DCMTemp.attrib['temp'])
     return temp
 
@@ -42,7 +40,7 @@ def getDCMTime(xml_input):
     return timestamp
 
 def makeHtmlLine(str_in):
-    str_in = '<p>' + '"' + str_in + '"' + '</p>'
+    str_in = '<p>' + str_in + '</p>'
     return str_in
 
 class MyServer(BaseHTTPRequestHandler):
@@ -82,7 +80,7 @@ class MyServer(BaseHTTPRequestHandler):
             self.wfile.write(html.format(temp[5:]).encode("utf-8"))
         
         if posts_received > 0:
-            print("POST REQUEST")
+            print("POST REQUEST: UPDATE HTML PAGE")
             html = '''
                 <html>
                 <head>
@@ -106,6 +104,7 @@ class MyServer(BaseHTTPRequestHandler):
             dcTime = getDCMTime(post_data)
             timestamp = 'Updated: ' + dcTime
             raw_xml = 'Parsed from XML: ' + post_data
+            print(makeHtmlLine(raw_xml)
             html = html + makeHtmlLine(timestamp) + makeHtmlLine(raw_xml) + end_html
             self.do_HEAD()
             self.wfile.write(html.format(temp[5:], dcTemp).encode("utf-8"))
@@ -119,8 +118,6 @@ class MyServer(BaseHTTPRequestHandler):
         print(" POST REQUEST RECEIVED. raw:")
         print(post_data)
         print(posts_received)
-        temp = os.popen("/opt/vc/bin/vcgencmd measure_temp").read()
-        dcTemp = getDCMTemp(post_data)
 
 
 
