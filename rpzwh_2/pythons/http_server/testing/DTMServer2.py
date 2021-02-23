@@ -26,16 +26,12 @@ def appendLog(entry):
 def getDCMTemp(xml_input):
     root = ET.fromstring(xml_input)
     DCMTemp = root[0] #DCMContact[0] is update
-    print(DCMTemp.tag) 
-    print(DCMTemp.attrib)
     temp = float(DCMTemp.attrib['temp'])
     return temp
 
 def getDCMTime(xml_input):
     root = ET.fromstring(xml_input)
     DCMTime = root[0] #DCMContact[0] is update
-    print(DCMTime.tag) 
-    print(DCMTime.attrib['timestamp'])
     timestamp = str(DCMTime.attrib['timestamp'])
     return timestamp
 
@@ -103,9 +99,10 @@ class MyServer(BaseHTTPRequestHandler):
             dcTemp = getDCMTemp(post_data)
             dcTime = getDCMTime(post_data)
             timestamp = 'Updated: ' + dcTime
-            raw_xml = 'Parsed from XML: ' + post_data
+            raw_xml = 'Parsed from XML: ' + '"' + post_data + '"'
+            connections = 'This was DCM Update #: ' + posts_received + 'since epoch.'
             print(makeHtmlLine(raw_xml))
-            html = html + makeHtmlLine(timestamp) + makeHtmlLine(raw_xml) + end_html
+            html = html + makeHtmlLine(timestamp) + makeHtmlLine(raw_xml) + makeHtmlLine(connections) + end_html
             self.do_HEAD()
             self.wfile.write(html.format(temp[5:], dcTemp).encode("utf-8"))
             
