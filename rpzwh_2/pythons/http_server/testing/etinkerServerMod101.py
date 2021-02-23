@@ -45,10 +45,11 @@ class MyServer(BaseHTTPRequestHandler):
             <body style="width:960px; margin: 20px auto;">
                 <h1>Welcome to the DTM http.server v1.01</h1>
                 <p>Running on a Raspberry Pi Zero W</p>
-                <p>Current GPU temperature is {}</p>
+                <p>Current DTM GPU temperature is {}</p>
                 <form method="POST">
                     <input name="submit">
                 </form>
+                <p>Current DCM GPU temperature is UNIDENTIFIED</p>
             </body>
             </html>
         '''
@@ -59,8 +60,27 @@ class MyServer(BaseHTTPRequestHandler):
     def do_POST(self):
 
         #content_length = int(self.headers['Content-Length'])  # Get the size of data
-        post_data = self.rfile.read(content_length).decode("utf-8")  # Get the data
+        post_data = self.rfile.read().decode("utf-8")  # Get the data
+        print(" POST REQUEST RECEIVED. raw:")
         print(post_data)
+        html = '''
+            <html>
+            <head>
+                <title>DTM Server (Stable Page)</title>
+            </head>
+            <body style="width:960px; margin: 20px auto;">
+                <h1>Welcome to the DTM http.server v1.01</h1>
+                <p>Running on a Raspberry Pi Zero W</p>
+                <p>Current DTM GPU temperature is {}</p>
+                <form method="POST">
+                    <input name="submit">
+                </form>
+                <p>Current DCM GPU temperature is {}</p>
+            </body>
+            </html>
+        '''
+        self.do_HEAD()
+        self.wfile.write(html.format(temp[5:], post_data).encode("utf-8"))
 
 
 

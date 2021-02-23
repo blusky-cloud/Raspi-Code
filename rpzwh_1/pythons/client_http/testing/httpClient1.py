@@ -27,12 +27,11 @@ sel1.text = temp
 
 obj_xml = ET.tostring(data)
 
-params = urllib.parse.urlencode(obj_xml)
 headers = {"Content-type": "text/xml", "Accept": "text/plain"}
 
 while True:
     sendDTM = http.client.HTTPConnection(host_name, host_port)
-    sendDTM.request('PUT', obj_xml, headers)
+    sendDTM.request('POST', host_address, obj_xml, headers)
     sleep(5)
 
 '''
