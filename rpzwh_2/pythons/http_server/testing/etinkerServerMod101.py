@@ -26,7 +26,9 @@ def getDCMTemp(xml_input):
     DCMTemp = root[0] #DCMContact[0] is update
     print(DCMTemp.tag) 
     print(DCMTemp.attrib)
-    return DCMTemp.attrib
+    print(DCMTemp.attrib['temp'])
+    temp = float(DCMTemp.attrib['temp'])
+    return temp
 
 
 class MyServer(BaseHTTPRequestHandler):
