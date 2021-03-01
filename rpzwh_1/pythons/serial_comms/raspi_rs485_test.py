@@ -3,7 +3,6 @@ from time import sleep
 #
 port = '/dev/ttyAMA0'
 conn = serial.Serial(port, baudrate=115200, timeout=0)
-conn.open()
 print('RASPI UART RS485 TEST')
 
 while True:
