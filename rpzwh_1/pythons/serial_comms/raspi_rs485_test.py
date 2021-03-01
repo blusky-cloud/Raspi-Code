@@ -1,7 +1,7 @@
 import serial
 from time import sleep
 #
-port = "dev/tty/AMA0"
+port = "/dev/tty/AMA0"
 conn = serial.Serial(port, baudrate=115200, timeout=0)
 print('RASPI UART RS485 TEST')
 
