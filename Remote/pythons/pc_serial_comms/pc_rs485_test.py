@@ -2,7 +2,7 @@ import serial
 from time import sleep
 
 port = "COM5"
-ser = serial.Serial(port, 115200, timeout=0)
+ser = serial.Serial(port, 115200, timeout=None)
 
 while True:
     print("  attempting read from laptop ")
