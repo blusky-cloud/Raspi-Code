@@ -1,13 +1,13 @@
 import serial
+import serial.rs485
 import os
 from gpiozero import LED
 from time import sleep
 #
 msg = b'  dcm contact msg'
 port = '/dev/ttyAMA0'
-#conn = serial.Serial(port, baudrate=115200)
-rconn = serial.rs485.RS485(port, baudrate=19200)
-rconn.rs485_mode = serial.rs485.RS485Settings(False, True)
+conn = serial.Serial(port, baudrate=19200)
+conn.rs485_mode = serial.rs485.RS485Settings(False, True)
 
 print('RASPI UART RS485 TEST')
 
