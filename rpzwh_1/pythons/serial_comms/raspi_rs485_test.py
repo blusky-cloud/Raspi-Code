@@ -17,8 +17,8 @@ Tx_Enable.on()
 while True:
     conn.write('CONNECTION'.encode('utf-8'))
     #conn.write(b"Connection Successful, This is the DCM Transmitting")
-    rcv = conn.read(10)
-    if len(rcv) > 0:
-        print(rcv)
+    #rcv = conn.read(10)
+    #if len(rcv) > 0:
+        #print(rcv)
     #port.write(b"You sent:")
     sleep(0.5)
