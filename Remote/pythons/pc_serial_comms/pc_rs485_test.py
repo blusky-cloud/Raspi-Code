@@ -2,24 +2,25 @@ import serial
 from time import sleep
 
 port = "COM5"
-ser = serial.Serial(port, 19200, timeout=1)
+ser = serial.Serial(port, baudrate=19200, timeout=0)
 count = 0
 print('INITIATING PC TEST')
 
 while True:
     print('PC receive')
     count = 0
-    while count < 300:
+    while count < 8:
         data = ser.read(15)
         if len(data) > 0:
             print(data)
         count += 1
-        sleep(0.01)
+        print(count)
+        sleep(0.25)
     count = 0
     print('PC transmit')
-    while count < 300:
+    while count < 8:
         ser.write('P'.encode('utf-8'))
         count += 1
-        sleep(0.01)
+        sleep(0.25)
 
 ser.close()
