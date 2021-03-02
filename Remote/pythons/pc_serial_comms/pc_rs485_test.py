@@ -9,7 +9,7 @@ while True:
     data = ser.read(15)
     if len(data) > 0:
         print(data)
-        #ser.write('msg received')
+        ser.write('msg received')
 
     sleep(4)
     print('not blocked')
