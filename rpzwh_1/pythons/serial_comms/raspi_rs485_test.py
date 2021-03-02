@@ -15,8 +15,9 @@ Tx_Enable = LED(18)
 Tx_Enable.on()
 
 while True:
-    conn.write('test rconn'.encode('utf-8'))
-    #conn.write(b"Connection Successful, This is the DCM Transmitting")
-    #rcv = port.read(10)
+    conn.write('CONNECTION'.encode('utf-8'))
+    conn.write(b"Connection Successful, This is the DCM Transmitting")
+    rcv = conn.read(10)
+    print(rcv)
     #port.write(b"You sent:")
-    sleep(0.25)
+    sleep(0.5)
