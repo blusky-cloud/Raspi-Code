@@ -17,6 +17,7 @@ count = 0
 while True:
     print('attempting raspi transmit')
     Tx_Enable.on()
+    count = 0
     while count < 300:
         conn.write('R'.encode('utf-8'))
         count += 1

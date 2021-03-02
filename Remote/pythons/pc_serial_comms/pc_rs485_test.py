@@ -8,12 +8,14 @@ print('INITIATING PC TEST')
 
 while True:
     print('PC receive')
+    count = 0
     while count < 300:
         data = ser.read(15)
         if len(data) > 0:
             print(data)
         count += 1
         sleep(0.01)
+    count = 0
     print('PC transmit')
     while count < 300:
         ser.write('P'.encode('utf-8'))
