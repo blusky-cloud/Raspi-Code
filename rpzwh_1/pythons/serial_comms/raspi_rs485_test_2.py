@@ -10,20 +10,20 @@ conn = serial.Serial(port, baudrate=19200, timeout=0)
 
 print('RASPI UART RS485 TEST')
 
-#Tx_Enable = LED(18)
-#Tx_Enable.on()
+Tx_Enable = LED(18)
+Tx_Enable.on()
 
 count = 0
 while True:
     print('attempting raspi transmit')
-    #Tx_Enable.on()
+    Tx_Enable.on()
     count = 0
     while count < 6:
         conn.write('R'.encode('utf-8'))
         count += 1
         sleep(0.5)
 
-#    Tx_Enable.off()
+    Tx_Enable.off()
     count = 0
     sleep(0.5)
     print('attempting raspi receive')
