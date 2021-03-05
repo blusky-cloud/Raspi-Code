@@ -71,7 +71,7 @@ while True:
     #GPIO.output(yellowLED, GPIO.HIGH)
     #GPIO.output(blueLED, GPIO.LOW)
     #GPIO.output(yellowLED, GPIO.LOW)
-    time.sleep(3)
+    time.sleep(1)
     GPIO.output(blueLED, GPIO.HIGH)
 
 GPIO.cleanup()
