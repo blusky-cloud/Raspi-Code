@@ -31,7 +31,7 @@ while True:
         rcv = conn.read(15)
         if len(rcv) > 0:
             print(rcv)
-        sleep(0.5
+        sleep(0.5)
         count += 1
 
 conn.close()
