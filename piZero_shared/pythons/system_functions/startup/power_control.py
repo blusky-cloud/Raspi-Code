@@ -17,7 +17,7 @@ def button_callback(channel):
 			print("SHUTDOWN TEST")
 	print("NOT PRESSED LONG ENOUGH")
 
-buttonPin = 20
+buttonPin = 22
 ledPin = 8
 
 GPIO.setmode(GPIO.BCM)
@@ -25,10 +25,10 @@ GPIO.setwarnings(False)
 
 GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(ledPin, GPIO.OUT)
-GPIO.output(ledPin, GPIO.HIGH)
 
-last_state = True
-input_state = True
+GPIO.output(ledPin, GPIO.LOW)
+time.sleep(1)
+GPIO.output(ledPin, GPIO.HIGH)
 
 while True:
 	GPIO.add_event_detect(buttonPin, GPIO.RISING, callback=button_callback)
