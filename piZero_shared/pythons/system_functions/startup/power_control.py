@@ -4,20 +4,21 @@ import os
 import subprocess
 
 def button_callback(channel):
-	prevState = True #because the button was pushed to get here
+	buttonState = True #because the button was pushed to get here
 	flag = 0
-	while prevState:
+	while buttonState:
 		buttonState = GPIO.input(buttonPin)
 		GPIO.output(ledPin, GPIO.LOW)
 		time.sleep(0.25)
-
-
-	print("Button pushed!")
-
+		GPIO.output(ledPin, GPIO.HIGH)
+		buttonState = GPIO.input(buttonPin)
+		flag += 1
+		if buttonState and flag > 8:
+			print("SHUTDOWN TEST")
+	print("NOT PRESSED LONG ENOUGH")
 
 buttonPin = 20
 ledPin = 8
-flag = 0
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -28,8 +29,9 @@ GPIO.output(ledPin, GPIO.HIGH)
 
 last_state = True
 input_state = True
-press_start = time.clock()
 
-GPIO.add_event_detect(buttonPin, GPIO.RISING, callback=button_callback)
+while True:
+	GPIO.add_event_detect(buttonPin, GPIO.RISING, callback=button_callback)
+	time.sleep(0.25)
 
 GPIO.cleanup()
