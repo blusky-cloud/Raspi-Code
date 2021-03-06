@@ -44,7 +44,7 @@ while True:
 		if buttonState and flag > 8:
 			print("SHUTDOWN TEST")
 
-	print("NOT PRESSED LONG ENOUGH")
+	        print("NOT PRESSED LONG ENOUGH")
 
 
 	time.sleep(0.25)
