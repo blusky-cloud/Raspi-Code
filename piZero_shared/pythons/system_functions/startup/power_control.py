@@ -31,10 +31,14 @@ while True:
 		flag += 1
 		if buttonPushed and flag > 8:
 			print("SHUTDOWN TEST")
+			GPIO.output(ledPin, GPIO.LOW)
+			time.sleep(1)
+
 		else:
 			print("NOT PRESSED LONG ENOUGH")
 
 
 	time.sleep(0.25)
 
+GPIO.output(ledPin, GPIO.LOW)
 GPIO.cleanup()
