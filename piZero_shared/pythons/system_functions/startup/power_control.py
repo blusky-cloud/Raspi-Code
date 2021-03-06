@@ -24,9 +24,10 @@ while True:
 	flag = 0
 	while buttonPushed:
 		GPIO.output(ledPin, GPIO.LOW)
-		time.sleep(0.25)
+		time.sleep(0.12)
 		GPIO.output(ledPin, GPIO.HIGH)
 		buttonPushed = GPIO.input(buttonPin)
+		time.sleep(0.12)
 		flag += 1
 		if buttonPushed and flag > 8:
 			print("SHUTDOWN TEST")
