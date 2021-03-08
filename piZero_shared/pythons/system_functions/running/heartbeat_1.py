@@ -6,9 +6,13 @@ time.sleep(5)
 count = 0
  
 while True:
-    print(count, end=" ") 
-    count += 1
-    time.sleep(120)
-    if count > 30:
-        print("It's been awhile")
+    try:
+        print("Idle for {} minutes".format(count*2), end=" ")
+        count += 1
+        time.sleep(120)
+        if count > 30:
+            print("It's been awhile")
+    except KeyboardInterrupt:
+        print("DONE")
+        break
 
