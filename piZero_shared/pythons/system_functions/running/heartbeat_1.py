@@ -7,7 +7,7 @@ count = 0
  
 while True:
     try:
-        print("Idle for {} minutes".format(count*2), end=" ")
+        print("Idle for {} minutes".format(count*2))
         count += 1
         time.sleep(120)
         if count > 30:
