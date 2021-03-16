@@ -49,12 +49,12 @@ while True:
 			else:
 				print("NOT PRESSED LONG ENOUGH")
 
+		time.sleep(0.25)
+		secs += 0.25
+
 	except KeyboardInterrupt:
 		print("IDLE OVER")
 		break
-
-	time.sleep(0.25)
-	secs += 0.25
 
 GPIO.output(ledPin, GPIO.LOW)
 GPIO.cleanup()
