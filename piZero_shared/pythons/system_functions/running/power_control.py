@@ -10,15 +10,15 @@ ledPin = 8
 flag = 0
 secs = 0.00 #time
 prevSecs = 0.00
-buttonPushed = False
+buttonPushed = True
 
 def displayIdleClock(idleTime):
-	print("Idle for {} minutes".format(idleTime * 2))
+	print("Idle for {} minutes".format(idleTime/60))
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
-GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(ledPin, GPIO.OUT)
 
 GPIO.output(ledPin, GPIO.LOW)
@@ -36,15 +36,14 @@ time.sleep(1)
 
 while True:
 	try:
-		print("Loop")
 		buttonPushed = GPIO.input(buttonPin)
 		flag = 0
 
-		if (secs - prevSecs > 120): #it's been 2 minutes
+		if (secs - prevSecs > 300): #it's been 5 minutes
 			displayIdleClock(secs)
 			prevSecs = secs
 
-		while buttonPushed:
+		while not buttonPushed:
 			GPIO.output(ledPin, GPIO.LOW)
 			time.sleep(0.12)
 			GPIO.output(ledPin, GPIO.HIGH)
@@ -52,7 +51,7 @@ while True:
 			time.sleep(0.12)
 			flag += 1
 
-			if buttonPushed and flag > 8:
+			if not buttonPushed and flag > 8:
 				print("SHUTDOWN TEST")
 				GPIO.output(ledPin, GPIO.LOW)
 				time.sleep(1)
