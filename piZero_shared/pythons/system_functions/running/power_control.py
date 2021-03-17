@@ -55,7 +55,7 @@ while True:
 				print("SHUTDOWN TEST")
 				GPIO.output(ledPin, GPIO.LOW)
 				time.sleep(1)
-			else:
+			elif not flag:
 				print("NOT PRESSED LONG ENOUGH")
 
 		time.sleep(0.25)
