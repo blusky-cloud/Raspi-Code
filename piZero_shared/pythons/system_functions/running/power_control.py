@@ -22,11 +22,21 @@ GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(ledPin, GPIO.OUT)
 
 GPIO.output(ledPin, GPIO.LOW)
+time.sleep(0.5)
+GPIO.output(ledPin, GPIO.HIGH)
+time.sleep(1)
+GPIO.output(ledPin, GPIO.LOW)
 time.sleep(1)
 GPIO.output(ledPin, GPIO.HIGH)
+time.sleep(1)
+GPIO.output(ledPin, GPIO.LOW)
+time.sleep(1)
+GPIO.output(ledPin, GPIO.HIGH)
+time.sleep(1)
 
 while True:
 	try:
+		print("Loop")
 		buttonPushed = GPIO.input(buttonPin)
 		flag = 0
 
