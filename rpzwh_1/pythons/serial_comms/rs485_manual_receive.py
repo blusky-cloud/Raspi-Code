@@ -11,11 +11,11 @@ conn = serial.Serial(port, baudrate=19200, timeout=0)
 
 print('RASPI UART MANUAL SWITCHING HAT RS485 TEST')
 
-Tx_Enable = LED(18)
-Tx_Enable.off()
+#Tx_Enable = LED(18)
+#Tx_Enable.off()
 
 while True:
-    rcv = conn.read(15)
+    rcv = conn.read()
     if len(rcv) > 0:
         print(rcv)
 
