@@ -15,12 +15,8 @@ Tx_Enable = LED(18)
 Tx_Enable.off()
 
 while True:
-    count = 0
-    while count < 6:
-        rcv = conn.read(15)
-        if len(rcv) > 0:
-            print(rcv)
-        sleep(0.01)
-        count += 1
+    rcv = conn.read(15)
+    if len(rcv) > 0:
+        print(rcv)
 
 conn.close()
