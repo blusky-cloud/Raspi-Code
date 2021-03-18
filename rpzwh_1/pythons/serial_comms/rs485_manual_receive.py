@@ -13,7 +13,7 @@ print('RASPI UART MANUAL SWITCHING HAT RS485 TEST')
 
 Tx_Enable = LED(18)
 Tx_Enable.off()
-S
+
 while True:
     count = 0
     while count < 6:
