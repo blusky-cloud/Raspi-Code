@@ -14,6 +14,9 @@ buttonPushed = True
 
 def displayIdleClock(idleTime):
 	print("Idle for {} minutes".format(idleTime/60))
+def shutdown_pi():
+	print("SHUTTING DOWN")
+	os.system("sudo shutdown -h now")
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -52,7 +55,7 @@ while True:
 			flag += 1
 
 			if not buttonPushed and flag > 8:
-				print("SHUTDOWN TEST")
+				shutdown_pi()
 				GPIO.output(ledPin, GPIO.LOW)
 				time.sleep(1)
 			elif not flag:
